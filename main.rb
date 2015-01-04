@@ -81,11 +81,11 @@ post '/new_player' do
   if params[:player_name].empty?
     @error = "You must enter your name."
     halt erb(:new_player)
-  elsif params[:player_name] =~ /[^a-zA-Z]/
+  elsif params[:player_name] =~ /[^a-zA-Z ]/
     @error = "Your name may contain only alphabetic characters."
     halt erb(:new_player)
   end
-  session[:player_name] = params[:player_name]
+  session[:player_name] = params[:player_name].split.map(&:capitalize).join(" ")
   redirect '/place_bet'
 end
 
